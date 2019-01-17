@@ -41,6 +41,19 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(TeamType))),
       resolve: () => data,
     },
+    team: {
+      type: TeamType,
+      args: {
+        id: { type: GraphQLString },
+        resolve: (parent, args) => {
+          const res = data
+          if (args.id) {
+            return res.filter((team) => team.id === args.id)
+          }
+          return res
+        },
+      },
+    },
   },
 })
 
